@@ -1,4 +1,3 @@
-const sockets = require('../sockets');
 const Todo = require('../models/todo');
 
 // Render home page
@@ -24,7 +23,6 @@ exports.all = (request, response) => {
 exports.update = (request, response) => {
   Todo.findById(request.param('id')).then((todo) => {
     if (!todo) return response.status(404);
-    todo.completed = request.body.completed === 'true';
     todo.title = request.body.title;
     return todo.save();
   }).then((todo) => {
@@ -37,11 +35,9 @@ exports.update = (request, response) => {
 // Create a TODO
 exports.create = (request, response) => {
   Todo.create({
-    completed: request.body.completed === 'true',
     title: request.body.title
   }).then((todo) => {
     response.send(todo);
-    sockets.todoAdded(todo);
   }).catch((error) => {
     response.status(500).send(error);
   });
