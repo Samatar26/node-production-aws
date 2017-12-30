@@ -8,7 +8,7 @@ app.disable('x-powered-by')
 ```
 
 
-#### Morgan
+### Morgan
 Morgan is a HTTP request logger middleware for Node.js. It simplifies the process of logging requests to your applications and it's default behaviour is to output the request details to stdout.
 
 Example usage:
@@ -56,3 +56,11 @@ const accessLogStream = fs.createWriteStream(path.join(__dirname, 'access.log'),
 // setup the logger
 app.use(morgan('combined', {stream: accessLogStream}))
 ```
+
+### NPM Scripts & Elastic Beanstalk
+
+Elastic Beanstalk is going to be our deployment environment. The three npm scrips that elastic beanstalk cares about are:
+
+- start: create Node process for the ec2 instance
+- prestart: run prior to start command
+- poststart: run after start command
