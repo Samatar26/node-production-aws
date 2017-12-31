@@ -7,6 +7,7 @@
     "test": "NODE_ENV=test mocha src/server/test",
     "start": "node bin/server.js",
     "prestart": "sequelize db:migrate",
+    "migrate":"sequelize db:migrate",
     "webpack": "node ./node_modules/webpack/bin/webpack.js",
     "webpack:dev:server": "webpack-dev-server",
     "dev": "NODE_ENV=dev run-p build:static dev:server",
