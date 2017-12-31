@@ -17,6 +17,10 @@ module.exports = (env = process.env.NODE_ENV) => {
         jQuery: 'jquery',
       }),
     ],
+    devServer: {
+      publicPath: '/public/',
+      port: 9000,
+    },
   }
 
   const envConfig = require(`./config/webpack/webpack.${env}.js`)

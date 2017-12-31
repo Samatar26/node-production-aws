@@ -64,3 +64,14 @@ Elastic Beanstalk is going to be our deployment environment. The three npm scrip
 - start: create Node process for the ec2 instance
 - prestart: run prior to start command
 - poststart: run after start command
+
+### Webpack-dev-server and style loader
+
+Style loader adds css to the dom by injecting a style tag into the head of the HTML document. It doesn't emit a separate css bundle. You can configure webpack-dev-server in your webpack config by adding the `devServer` key to your config, like so:
+
+```js
+devServer: {
+  publicPath: '/public/',
+  port: 9000,
+},
+```
