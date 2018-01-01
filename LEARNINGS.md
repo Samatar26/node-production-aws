@@ -294,3 +294,59 @@ exports.create = (request, response) => {
 
 ##### Some gotchas
 As you're creating migrations that mutate the state of the underlying tables that back your models, you'll have to keep that in sync with what's actually defined in your model. So if you create a migration that adds a property to a model, you'll have to make sure to add that same property to your model declaration.
+
+
+## Updating a data model
+First thing you'd want to do is generate a migration:
+```js
+sequelize migration:create
+```
+
+This is going to create a new migration file in your project. Again, it consists of two operations, the up and down operation. So when we're migrating the database up, when you're modifying it from it's previous state, all of the logic is within the up function. If for some reason you need to roll the database change back, the logic will be in the down function.  
+
+_**The role of code in a migration**_ is to modify the database table in place and _**not**_ recreate the database table, or else you'll lose all of the data.
+
+```js
+//new migration
+// 20171231120818-add-completed
+
+module.exports = {
+  up: function (queryInterface, Sequelize) {
+    queryInterface.addColumn(
+      'Todos', // name of table
+      'completed', //name of attribute
+      Sequelize.BOOLEAN // data type
+    )
+  },
+
+  down: function (queryInterface, Sequelize) {
+    queryInterface.removeColumn(
+      'Todos', // name of table
+      'completed' //name of column
+    )
+  }
+};
+```
+
+```js
+//  models/todo.js
+
+const Sequelize = require('sequelize');
+const db = require('./db');
+
+let Todo = db.define('Todo', {
+  title: Sequelize.TEXT,
+  completed: Sequelize.BOOLEAN
+});
+
+module.exports = Todo;
+
+
+```
+
+So the steps we took to update our data model and add a completed field to our Todos table were:
+- Creating a migration
+- Handling adding and removing the column whether or not we're migrating the database up or down
+- Update our todo model, to have the property that we added to the database.
+- Updated our test
+- Updated our express controller logic to take advantage of that new property that wasn't there before.

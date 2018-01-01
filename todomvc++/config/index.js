@@ -36,7 +36,7 @@ switch (process.env.NODE_ENV) {
   default: environmentSettings = require('./development'); break;
 }
 config = Object.assign(config, environmentSettings);
-
+console.log(config)
 
 // ---------------------------------------
 // Override with user settings, if present
